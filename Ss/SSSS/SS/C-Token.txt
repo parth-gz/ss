@@ -1,0 +1,46 @@
+%{ 
+#include<stdio.h> 
+%} 
+%% 
+[/][/].*        {printf("\n Single line comment1 : %s",yytext);} 
+"/*"[^*]*"*/"   {printf("\n Multi line comment : %s",yytext);} 
+#              {printf("\n Processing Directives : %s",yytext);} 
+include|printf|int|void|main     {printf("\n Keywords : %s",yytext);} 
+"<"|">"|"("|")"|";"|","|"{"|"}"    {printf("\n Punctuation : %s",yytext);} 
+[a-z]+[.][h]                      {printf("\n Header files : %s",yytext);} 
+["].*["]                       {printf("\n Litrels : %s",yytext);} 
+[a-zA-Z][a-zA-Z0-9_]            {printf("\n Identifier : %s",yytext);} 
+[0-9]+                          {printf("\n Integer Number : %s",yytext);} 
+[0-9]+(\.[0-9]+)               {printf("\n Decimal Number : %s",yytext);} 
+"+"|"-"|"="                      {printf("\n Operators : %s",yytext);} 
+%% 
+int yywrap() 
+{ 
+return 1; 
+} 
+int main() 
+{ 
+yyin=fopen("pro.c","r"); 
+yylex(); 
+return 0; 
+} 
+pro.c 
+#include<stdio.h> 
+void fun(){ 
+printf("Hello this is user defined function"); 
+} 
+int main(){ 
+//variable 
+int rno=77; 
+float marks=8.88; 
+printf("Akshada Phopse"); 
+fun(); 
+return 0; 
+/*hello this 
+is multiline comment*/ 
+} 
+Commands to Run Program 
+1. lex assignmentOne.l 
+2. gcc lex.yy.c 
+3. ./a.out 
+A
